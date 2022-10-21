@@ -1,3 +1,5 @@
+import { defineConfig } from 'rollup'
+
 import vue from '@vitejs/plugin-vue'
 import PostCSS from 'rollup-plugin-postcss'
 import Resolve from '@rollup/plugin-node-resolve'
@@ -6,9 +8,11 @@ import Replace from '@rollup/plugin-replace'
 
 import AutoImport from 'unplugin-auto-import/rollup'
 import Components from 'unplugin-vue-components/rollup'
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/rollup'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
-export default {
+export default defineConfig({
   input: 'src/main.js',
   // https://blog.csdn.net/summer_dou/article/details/123922964
   // external 选项用于确保外部化处理那些你不想打包进库的依赖,解决插件报错问题 (reading 'isCE')
@@ -45,15 +49,24 @@ export default {
     // rollup打包会处理相对路径，对于npm包的绝对路径引用是不会做任何处理的。这种情况可以用 @rollup/plugin-node-resolve 插件处理。
     vue(),
     AutoImport({
-      imports: [
-        'vue',
+      imports: ['vue'],
+      resolvers: [
+        ElementPlusResolver(),
+        IconsResolver(),
       ],
-      // include: [/\.vue$/, /\.vue\?vue/],
-      resolvers: [ElementPlusResolver()],
     }),
     Components({
-      // include: [/\.vue$/, /\.vue\?vue/],
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver(),
+        IconsResolver({
+          // TODO: 安装 @iconify-json/ep 并配合 unplugin-icons 即可以自动注册 element-plus 组件
+          // 前提是 icon 需要以 i-ep-xxx 开头
+          enabledCollections: ['ep'],
+        }),
+      ],
+    }),
+    Icons({
+      autoInstall: true,
     }),
     Resolve(),
     // https://github.com/tuolib/ab-vue/blob/9d4a905efdb71a757a327a0081eae9addcedb12b/build/rollup.config.js#L60
@@ -71,4 +84,4 @@ export default {
       include: /(?<!&module=.*)\.(s?)css$/
     }),
   ]
-}
+})
