@@ -50,7 +50,7 @@
           @click="handlePushRight()"
         >
           <el-icon>
-            <ArrowRightBold />
+            <i-ep-ArrowRightBold />
           </el-icon>
         </el-button>
       </div>
@@ -62,7 +62,7 @@
           @click="handlePushLeft()"
         >
           <el-icon>
-            <ArrowLeftBold />
+            <i-ep-ArrowLeftBold />
           </el-icon>
         </el-button>
       </div>
@@ -112,7 +112,9 @@
 <script>
  // TODO: 不用 lodash 而用 lodash-es 的原因在于 lodash-es 可更好的用于 tree-shaking
 import { debounce } from 'lodash-es'
-import { ArrowRightBold, ArrowLeftBold } from '@element-plus/icons-vue'
+// TODO: 安装 @iconify-json/ep 并配合 unplugin-icons 即可以自动注册 element-plus 组件
+// 前提是 icon 需要以 i-ep-xxx 开头
+// import { ArrowRightBold, ArrowLeftBold } from '@element-plus/icons-vue'
 
 import TransferScroller from './TransferScroller.vue'
 
@@ -136,8 +138,8 @@ const getCompanyByIndustry = (companyList = [], keyField) => {
 export default defineComponent({
   name: 'PublicTransfer',
   components: {
-    ArrowLeftBold,
-    ArrowRightBold,
+    // ArrowLeftBold,
+    // ArrowRightBold,
     TransferScroller,
   },
   props: {
