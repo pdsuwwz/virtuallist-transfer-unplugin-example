@@ -16,7 +16,6 @@
     "@element-plus/icons-vue": "^2.0.10",
     "@iconify-json/ep": "^1.1.8",
     "element-plus": "^2.2.18",
-    "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "vue": "^3.2.41",
     "vue-virtual-scroller": "2.0.0-beta.3"
